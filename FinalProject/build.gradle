@@ -19,4 +19,18 @@ allprojects {
         jcenter()
         google()
     }
+
+    task startAppEngine(dependsOn: ":backend:appengineStart")
+    task stopAppEngine(dependsOn: ":backend:appengineStop")
+    task runConnectedTests(dependsOn: ":app:connectedAndroidTest")
+    task runUnitTests(dependsOn: ":app:test")
+
+    task runServerAndTest(dependsOn: [stopAppEngine,startAppEngine, runUnitTests, runConnectedTests]){
+        doLast {
+            println "All tasks completed"
+        }
+    }
+    runConnectedTests.mustRunAfter(startAppEngine)
+    runUnitTests.mustRunAfter(startAppEngine)
+    stopAppEngine.mustRunAfter(runUnitTests)
 }

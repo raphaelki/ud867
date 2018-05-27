@@ -32,7 +32,7 @@ public abstract class BaseFragment extends Fragment {
             public void onClick(View v) {
                 tellJokeButton.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
-                new EndpointsAsyncTask().execute(asyncTaskCallback);
+                new EndpointsAsyncTask(asyncTaskCallback).execute();
             }
         });
         asyncTaskCallback = new EndpointsAsyncTask.EndpointAsyncTaskCallback() {
