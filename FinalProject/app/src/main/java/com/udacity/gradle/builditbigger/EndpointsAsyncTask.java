@@ -1,12 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Pair;
-import android.widget.Toast;
 
-import com.example.test.jokeview.JokeViewActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -15,32 +10,29 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
-class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+class EndpointsAsyncTask extends AsyncTask<EndpointsAsyncTask.EndpointAsyncTaskCallback, Void, String> {
     private static MyApi myApiService = null;
-    private Context context;
+    private EndpointAsyncTaskCallback callback;
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected String doInBackground(EndpointAsyncTaskCallback... callbacks) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
-                    // - turn off compression when running against local devappserver
                     .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
-                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) {
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });
-            // end options for devappserver
 
             myApiService = builder.build();
         }
 
-        context = params[0].first;
-        String name = params[0].second;
+        this.callback = callbacks[0];
 
         try {
             return myApiService.tellJoke().execute().getData();
@@ -51,12 +43,10 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(String result) {
-        showJokeView(result);
+        callback.onResultReceived(result);
     }
 
-    private void showJokeView(String joke){
-        Intent intent = new Intent(context, JokeViewActivity.class);
-        intent.putExtra("JOKE_KEY",joke);
-        context.startActivity(intent);
+    public interface EndpointAsyncTaskCallback {
+        void onResultReceived(String result);
     }
 }
