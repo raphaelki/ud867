@@ -13,6 +13,7 @@ import java.io.IOException;
 class EndpointsAsyncTask extends AsyncTask<EndpointsAsyncTask.EndpointAsyncTaskCallback, Void, String> {
     private static MyApi myApiService = null;
     private EndpointAsyncTaskCallback callback;
+    private boolean fetchSuccessful = true;
 
     @Override
     protected String doInBackground(EndpointAsyncTaskCallback... callbacks) {
@@ -37,16 +38,17 @@ class EndpointsAsyncTask extends AsyncTask<EndpointsAsyncTask.EndpointAsyncTaskC
         try {
             return myApiService.tellJoke().execute().getData();
         } catch (IOException e) {
+            fetchSuccessful = false;
             return e.getMessage();
         }
     }
 
     @Override
     protected void onPostExecute(String result) {
-        callback.onResultReceived(result);
+        callback.onResultReceived(fetchSuccessful, result);
     }
 
     public interface EndpointAsyncTaskCallback {
-        void onResultReceived(String result);
+        void onResultReceived(boolean successful, String result);
     }
 }
