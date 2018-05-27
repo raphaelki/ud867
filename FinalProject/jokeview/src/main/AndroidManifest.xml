@@ -3,7 +3,8 @@
     package="com.example.test.jokeview">
 
     <application>
-        <activity android:name=".JokeViewActivity"/>
+        <activity android:name=".JokeViewActivity"
+            android:parentActivityName="com.udacity.gradle.builditbigger.MainActivity"/>
     </application>
 
 </manifest>
