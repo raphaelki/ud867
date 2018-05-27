@@ -7,13 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.test.jokes.JokeTeller;
 import com.example.test.jokeview.JokeViewActivity;
-
 
 public class MainActivity extends AppCompatActivity {
 
-    private JokeTeller jokeTeller;
     private EndpointsAsyncTask.EndpointAsyncTaskCallback asyncTaskCallback =
             new EndpointsAsyncTask.EndpointAsyncTaskCallback() {
                 @Override
