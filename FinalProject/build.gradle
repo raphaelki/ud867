@@ -25,12 +25,12 @@ allprojects {
     task runConnectedTests(dependsOn: ":app:connectedAndroidTest")
     task runUnitTests(dependsOn: ":app:test")
 
-    task runServerAndTest(dependsOn: [stopAppEngine,startAppEngine, runUnitTests, runConnectedTests]){
+    task runServerAndTest(dependsOn: [startAppEngine, runConnectedTests, runUnitTests]){
         doLast {
             println "All tasks completed"
         }
+        finalizedBy(stopAppEngine)
     }
     runConnectedTests.mustRunAfter(startAppEngine)
     runUnitTests.mustRunAfter(startAppEngine)
-    stopAppEngine.mustRunAfter(runUnitTests)
 }

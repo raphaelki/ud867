@@ -16,6 +16,8 @@ import com.example.test.jokeview.JokeViewActivity;
 
 public abstract class BaseFragment extends Fragment {
 
+    private final String TAG = getClass().getSimpleName();
+
     private EndpointsAsyncTask.EndpointAsyncTaskCallback asyncTaskCallback;
     private Button tellJokeButton;
     private ProgressBar progressBar;
@@ -54,7 +56,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void showJokeView() {
         Intent intent = new Intent(getContext(), JokeViewActivity.class);
-        intent.putExtra("JOKE_KEY", jokeResult);
+        intent.putExtra(JokeViewActivity.JOKE_KEY, jokeResult);
         startActivity(intent);
     }
 
