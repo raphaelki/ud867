@@ -1,12 +1,6 @@
-# ud867: Gradle for Android and Java
+# Gradle for Android and Java
 
-Welcome to the demos and exercises accompanying ud867 at Udacity!
+5th project of Udacity Android Developer Nanodegree.
 
-Each directory contains a README.md or solution.gradle that will explain either
-the concept being explored or the exercise at hand. For each exercise, hints
-and a solution.gradle file are also provided.
-
-This course is specifically concerned with the app build process, not writing
-apps in the first place. If you're just starting out on your Android journey,
-you might want to take Udacity's [Developing Android
-Apps](https://www.udacity.com/course/ud853) course.
+This project is about customization of gradle builds and inclusion of android and java libraries in a project.
+A Google Cloud Endpoint is used to provide jokes to the client application. Also, there are two product flavors, a "free" flavor which shows an ad before displaying the joke and a "paid" flavor which does not.
