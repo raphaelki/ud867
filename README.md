@@ -4,3 +4,5 @@
 
 This project is about customization of gradle builds and inclusion of android and java libraries in a project.
 A Google Cloud Endpoint is used to provide jokes to the client application. Also, there are two product flavors, a "free" flavor which shows an ad before displaying the joke and a "paid" flavor which does not.
+
+The starter code is provided [here](https://github.com/udacity/ud867/tree/master/FinalProject).
